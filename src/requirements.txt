@@ -1,0 +1,3 @@
+python-dotenv 
+elasticsearch
+sentence_transformers
