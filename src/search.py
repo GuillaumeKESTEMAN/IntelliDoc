@@ -18,6 +18,7 @@ def textual_search(elastic):
 
     print(res["hits"]["hits"])
 
+    print("appuyez sur Entrée pour continuer...")
     input()
 
 
@@ -40,4 +41,5 @@ def semantic_search(elastic, model):
 
     print(res["hits"]["hits"])
 
+    print("appuyez sur Entrée pour continuer...")
     input()
