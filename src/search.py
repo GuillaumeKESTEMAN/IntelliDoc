@@ -1,25 +1,29 @@
-import os
-from elasticsearch import Elasticsearch
-from sentence_transformers import SentenceTransformer
-from dotenv import load_dotenv
+def textual_search(elastic):
+    print("RECHERCHE TEXTUELLE")
 
-load_dotenv()
+    research = input("Que recherchez-vous : ")
 
-try:
-    es = Elasticsearch(
-        "http://10.0.0.1:9200",
-        basic_auth=("elastic", os.getenv("ELASTIC_PASSWORD")),
+    query = {
+        "bool": {
+            "should": [
+                {"fuzzy": {"title": {"value": research, "fuzziness": "AUTO"}}},
+                {"fuzzy": {"paragraph": {"value": research, "fuzziness": "AUTO"}}},
+            ]
+        }
+    }
+
+    res = elastic.search(
+        index="documents", query=query, size=1, source=["title", "paragraph", "link"]
     )
-except Exception as e:
-    print(e)
 
-# utilisation d'un modèle de sbert
-# https://www.sbert.net/docs/pretrained_models.html
-# https://huggingface.co/sentence-transformers/all-mpnet-base-v2
-model = SentenceTransformer("all-mpnet-base-v2")
+    print(res["hits"]["hits"])
+
+    input()
 
 
-def search():
+def semantic_search(elastic, model):
+    print("RECHERCHE SÉMANTIQUE")
+
     research = input("Que recherchez-vous : ")
 
     vector_of_research = model.encode(research)
@@ -30,7 +34,9 @@ def search():
         "k": 1,
     }
 
-    res = es.search(index="documents", knn=query, source=["title", "paragraph", "link"])
+    res = elastic.search(
+        index="documents", knn=query, source=["title", "paragraph", "link"]
+    )
 
     print(res["hits"]["hits"])
 
