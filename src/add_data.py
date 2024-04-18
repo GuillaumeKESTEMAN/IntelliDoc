@@ -13,6 +13,7 @@ def add_data(elastic, model):
     try:
         elastic.index(index="documents", document=new_data)
         print("Donnée ajoutée avec succès")
+        print("appuyez sur Entrée pour continuer...")
         input()
     except Exception as e:
         print(e)
