@@ -3,6 +3,7 @@ import json
 from elasticsearch import Elasticsearch
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
+from import_wikipedia_data import import_wikipedia_data
 from search import semantic_search, textual_search
 from add_data import add_data
 
@@ -37,8 +38,9 @@ while isAppOpen:
     os.system("cls" if os.name == "nt" else "clear")
     print("0 : quitter")
     print("1 : ajouter une donnée")
-    print("2 : faire une recherche textuelle")
-    print("3 : faire une recherche sémantique")
+    print("2 : importer un dataset Wikipédia")
+    print("3 : faire une recherche textuelle")
+    print("4 : faire une recherche sémantique")
     mainQuestion = input("Que voulez vous faire : ")
 
     os.system("cls" if os.name == "nt" else "clear")
@@ -48,6 +50,8 @@ while isAppOpen:
     elif mainQuestion == "1":
         add_data(elastic, model)
     elif mainQuestion == "2":
-        textual_search(elastic)
+        import_wikipedia_data(elastic, model)
     elif mainQuestion == "3":
+        textual_search(elastic)
+    elif mainQuestion == "4":
         semantic_search(elastic, model)

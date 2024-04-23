@@ -7,6 +7,7 @@ COPY src/requirements.txt ./
 COPY src/index_mapping.json ./
 COPY src/search.py ./
 COPY src/add_data.py ./
+COPY src/import_wikipedia_data.py ./
 COPY src/main.py ./
 COPY src/build.py ./
 
