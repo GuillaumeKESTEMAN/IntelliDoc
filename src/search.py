@@ -25,10 +25,24 @@ def textual_search(elastic):
     query = {
         "bool": {
             "should": [
-                {"fuzzy": {"title": {"value": research, "fuzziness": "AUTO"}}},
-                {"fuzzy": {"paragraph": {"value": research, "fuzziness": "AUTO"}}},
-            ]
-        }
+                {
+                    "fuzzy": {
+                        "title": {"value": research, "fuzziness": "AUTO", "boost": 2}
+                    }
+                },
+                {
+                    "fuzzy": {
+                        "paragraph": {
+                            "value": research,
+                            "fuzziness": "AUTO",
+                            "boost": 1,
+                        }
+                    }
+                },
+            ],
+        },
+        "size": 10,
+        "min_score": 1.3,
     }
 
     # make ElasticSearch search query
