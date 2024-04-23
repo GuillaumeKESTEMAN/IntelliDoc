@@ -41,6 +41,7 @@ def import_wikipedia_data(elastic, model):
         minutes, seconds = divmod(int(time_rest.total_seconds()), 60)
 
         print("Importation de : " + data_entry["title"])
+        print("")
         print(f"Element : {index + 1}/{size}")
         print(f"Temps restant estimé : {minutes:02}:{seconds:02}")
 
@@ -65,18 +66,30 @@ def import_wikipedia_data(elastic, model):
 
         print("\033[A                              \033[A")
         print("\033[A                              \033[A")
+        print("\033[A                              \033[A")
 
     os.system("cls" if os.name == "nt" else "clear")
 
-    # index Wikipedia dataset in ElasticSearch
-    try:
-        print("Importation des données...")
-        elastic.bulk(index="documents", body=bulk_data)
-        print("\n")
-        print("Dataset Wikipédia importé avec succès")
-    except Exception as e:
-        print("Une erreur est survenue")
-        print(e)
+    # set pack size
+    pack_size = 1000
+
+    # Diviser le grand tableau en lots plus petits
+    bulk_packs = [
+        bulk_data[i : i + pack_size] for i in range(0, len(bulk_data), pack_size)
+    ]
+
+    print("Importation des données...")
+
+    # make one bulk request for every group of X data
+    for bulk_pack in bulk_packs:
+        # index Wikipedia dataset in ElasticSearch
+        try:
+            elastic.bulk(index="documents", body=bulk_pack, refresh=True)
+        except Exception:
+            print("Une erreur est survenue")
+
+    print("\n")
+    print("Dataset Wikipédia importé avec succès")
 
     print("\n")
     input("appuyez sur Entrée pour continuer...")
