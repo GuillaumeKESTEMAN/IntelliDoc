@@ -18,7 +18,7 @@ services:
             dockerfile: src/Dockerfile
         environment:
             - TERM=xterm
-        mem_limit: 500m
+        mem_limit: 1g
         networks:
             intellidoc_network:
                 ipv4_address: 10.0.0.2

@@ -6,9 +6,10 @@ def print_result(results):
         print("Aucune donnée trouvé")
     else:
         research_result = results[0]["_source"]
-        print("Titre: " + research_result["title"])
-        print("Paragraphe: " + research_result["paragraph"])
-        print("Lien: " + research_result["link"])
+        print("\033[1m" + research_result["title"] + "\033[0m")
+        print("")
+        print(research_result["paragraph"])
+        print("\nSource : " + research_result["link"])
 
     print("\n")
     input("appuyez sur Entrée pour continuer...")
