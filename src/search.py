@@ -23,7 +23,7 @@ def select_result(results):
     return results[selected_result - 1]["_source"]
 
 
-# print first result
+# select result and print it
 def print_result(results):
     print()
 
@@ -52,23 +52,29 @@ def textual_search(elastic):
 
     # create ElasticSearch search query
     query = {
-        "bool": {
-            "should": [
-                {
-                    "fuzzy": {
-                        "title": {"value": research, "fuzziness": "AUTO", "boost": 2}
-                    }
-                },
-                {
-                    "fuzzy": {
-                        "paragraph": {
-                            "value": research,
-                            "fuzziness": "AUTO",
-                            "boost": 1,
+        "query": {
+            "bool": {
+                "should": [
+                    {
+                        "fuzzy": {
+                            "title": {
+                                "value": research,
+                                "fuzziness": "AUTO",
+                                "boost": 2,
+                            }
                         }
-                    }
-                },
-            ],
+                    },
+                    {
+                        "fuzzy": {
+                            "paragraph": {
+                                "value": research,
+                                "fuzziness": "AUTO",
+                                "boost": 1,
+                            }
+                        }
+                    },
+                ],
+            },
         },
         "size": 10,
         "min_score": 1.3,
@@ -78,14 +84,12 @@ def textual_search(elastic):
     try:
         res = elastic.search(
             index="documents",
-            query=query,
-            size=1,
+            body=query,
             source=["title", "paragraph", "link"],
         )
     except Exception:
         print("Une erreur est survenue")
 
-    # print first result or none
     print_result(res["hits"]["hits"])
 
 
@@ -132,5 +136,4 @@ def semantic_search(elastic, model):
     except Exception:
         print("Une erreur est survenue")
 
-    # print first result or none
     print_result(res["hits"]["hits"])
