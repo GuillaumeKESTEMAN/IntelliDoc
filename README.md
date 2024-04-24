@@ -23,10 +23,14 @@ You can download the wikipedia dataset and import X items into the database (you
 
 This can be a long process, as there is a lot of data in the wikipedia dataset, and we also need to reformat the data.
 
-### 3. Make a textual document research
+### 3. Reset database index
+
+You can reset all data in the database to restart with new data without rebuilding the containers
+
+### 4. Make a textual document research
 
 You can make a textual document research (without AI).
 
-### 4. Make a semantic document research
+### 5. Make a semantic document research
 
 You can make a semantic document research (with AI).
