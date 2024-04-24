@@ -35,7 +35,7 @@ def print_result(results):
         os.system("cls" if os.name == "nt" else "clear")
         print("\033[1m" + research_result["title"] + "\033[0m")
         print()
-        print(research_result["paragraph"])
+        print(research_result["text"])
         print()
         print()
         print("\nSource : " + research_result["link"])
@@ -66,7 +66,7 @@ def textual_search(elastic):
                     },
                     {
                         "fuzzy": {
-                            "paragraph": {
+                            "text": {
                                 "value": research,
                                 "fuzziness": "AUTO",
                                 "boost": 1,
@@ -85,7 +85,7 @@ def textual_search(elastic):
         res = elastic.search(
             index="documents",
             body=query,
-            source=["title", "paragraph", "link"],
+            source=["title", "text", "link"],
         )
     except Exception:
         print("Une erreur est survenue")
@@ -116,7 +116,7 @@ def semantic_search(elastic, model):
                     },
                     {
                         "knn": {
-                            "field": "paragraph_vector",
+                            "field": "text_vector",
                             "query_vector": vector_of_research,
                             "boost": 1,
                         }
@@ -131,7 +131,7 @@ def semantic_search(elastic, model):
     # make ElasticSearch search query
     try:
         res = elastic.search(
-            index="documents", body=query, source=["title", "paragraph", "link"]
+            index="documents", body=query, source=["title", "text", "link"]
         )
     except Exception:
         print("Une erreur est survenue")
