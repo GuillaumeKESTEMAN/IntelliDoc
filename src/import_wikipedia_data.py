@@ -87,8 +87,8 @@ def import_wikipedia_data(elastic, model):
         except Exception:
             print("Une erreur est survenue")
 
-    print("\n")
+    print()
     print("Dataset Wikipédia importé avec succès")
 
-    print("\n")
+    print()
     input("appuyez sur Entrée pour continuer...")
