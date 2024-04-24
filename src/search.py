@@ -1,18 +1,47 @@
+import os
+
+
+def select_result(results):
+    selected_result = -1
+
+    for index, result in enumerate(results):
+        print(f"{index + 1} :", result["_source"]["title"])
+
+    while True:
+        print()
+        try:
+            selected_result = int(input("Quel résultat choisissez-vous : "))
+
+            if selected_result > 0 and selected_result <= len(results):
+                break
+            else:
+                raise ValueError
+        except ValueError:
+            print("\033[A                                                 \033[A")
+            print("\033[A                                                 \033[A")
+
+    return results[selected_result - 1]["_source"]
+
+
 # print first result
 def print_result(results):
-    print("\n")
+    print()
 
     if len(results) == 0:
         print("Aucune donnée trouvé")
     else:
-        research_result = results[0]["_source"]
+        research_result = select_result(results)
+
+        os.system("cls" if os.name == "nt" else "clear")
         print("\033[1m" + research_result["title"] + "\033[0m")
-        print("")
+        print()
         print(research_result["paragraph"])
+        print()
+        print()
         print("\nSource : " + research_result["link"])
 
-    print("\n")
-    input("appuyez sur Entrée pour continuer...")
+    print()
+    input("appuyez sur Entrée pour revenir au menu principal...")
 
 
 def textual_search(elastic):

@@ -15,10 +15,10 @@ def add_data(elastic, model):
     # index data in ElasticSearch
     try:
         elastic.index(index="documents", document=new_data)
-        print("\n")
+        print()
         print("Donnée ajoutée avec succès")
 
-        print("\n")
+        print()
         input("appuyez sur Entrée pour continuer...")
     except Exception:
         print("Une erreur est survenue")
