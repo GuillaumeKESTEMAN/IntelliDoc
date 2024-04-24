@@ -1,8 +1,14 @@
 {
 	"properties": {
 		"title": { "type": "text" },
+		"title_vector": {
+			"type": "dense_vector",
+			"dims": 768,
+			"index": true,
+			"similarity": "l2_norm"
+		},
 		"paragraph": { "type": "text" },
-		"text_vector": {
+		"paragraph_vector": {
 			"type": "dense_vector",
 			"dims": 768,
 			"index": true,
