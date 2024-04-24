@@ -4,11 +4,12 @@ def add_data(elastic, model):
     paragraph = input("Entrez le paragraphe : ")
     link = input("Entrez le lien de la source : ")
 
-    # create json and add text_vector from concatenation of the title and the paragraph
+    # create json and add title_vector and paragraph_vector
     new_data = {
         "title": title,
+        "title_vector": model.encode(title),
         "paragraph": paragraph,
-        "text_vector": model.encode(title + "\n" + paragraph),
+        "paragraph_vector": model.encode(paragraph),
         "link": link,
     }
 

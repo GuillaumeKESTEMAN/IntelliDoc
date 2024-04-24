@@ -25,10 +25,24 @@ def textual_search(elastic):
     query = {
         "bool": {
             "should": [
-                {"fuzzy": {"title": {"value": research, "fuzziness": "AUTO"}}},
-                {"fuzzy": {"paragraph": {"value": research, "fuzziness": "AUTO"}}},
-            ]
-        }
+                {
+                    "fuzzy": {
+                        "title": {"value": research, "fuzziness": "AUTO", "boost": 2}
+                    }
+                },
+                {
+                    "fuzzy": {
+                        "paragraph": {
+                            "value": research,
+                            "fuzziness": "AUTO",
+                            "boost": 1,
+                        }
+                    }
+                },
+            ],
+        },
+        "size": 10,
+        "min_score": 1.3,
     }
 
     # make ElasticSearch search query
@@ -57,15 +71,34 @@ def semantic_search(elastic, model):
 
     # create ElasticSearch search query
     query = {
-        "field": "text_vector",
-        "query_vector": vector_of_research,
-        "k": 1,
+        "query": {
+            "bool": {
+                "should": [
+                    {
+                        "knn": {
+                            "field": "title_vector",
+                            "query_vector": vector_of_research,
+                            "boost": 2,
+                        }
+                    },
+                    {
+                        "knn": {
+                            "field": "paragraph_vector",
+                            "query_vector": vector_of_research,
+                            "boost": 1,
+                        }
+                    },
+                ],
+            },
+        },
+        "size": 10,
+        "min_score": 1.3,
     }
 
     # make ElasticSearch search query
     try:
         res = elastic.search(
-            index="documents", knn=query, source=["title", "paragraph", "link"]
+            index="documents", body=query, source=["title", "paragraph", "link"]
         )
     except Exception:
         print("Une erreur est survenue")

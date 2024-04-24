@@ -56,10 +56,9 @@ def import_wikipedia_data(elastic, model):
         bulk_data.append(
             {
                 "title": data_entry["title"],
+                "title_vector": model.encode(data_entry["title"]),
                 "paragraph": data_entry["text"],
-                "text_vector": model.encode(
-                    data_entry["title"] + "\n" + data_entry["text"]
-                ),
+                "paragraph_vector": model.encode(data_entry["text"]),
                 "link": data_entry["url"],
             }
         )
