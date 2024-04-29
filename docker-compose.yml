@@ -19,6 +19,8 @@ services:
         environment:
             - TERM=xterm
         mem_limit: 1g
+        volumes:
+            - ./src/import_data.json:/app/import_data.json
         networks:
             intellidoc_network:
                 ipv4_address: 10.0.0.2

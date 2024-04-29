@@ -1,15 +1,15 @@
 def add_data(elastic, model):
     # get textual data
     title = input("Entrez le titre du document : ")
-    paragraph = input("Entrez le paragraphe : ")
+    text = input("Entrez le texte : ")
     link = input("Entrez le lien de la source : ")
 
-    # create json and add title_vector and paragraph_vector
+    # create json and add title_vector and text_vector
     new_data = {
         "title": title,
         "title_vector": model.encode(title),
-        "paragraph": paragraph,
-        "paragraph_vector": model.encode(paragraph),
+        "text": text,
+        "text_vector": model.encode(text),
         "link": link,
     }
 

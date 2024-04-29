@@ -7,8 +7,8 @@
 			"index": true,
 			"similarity": "l2_norm"
 		},
-		"paragraph": { "type": "text" },
-		"paragraph_vector": {
+		"text": { "type": "text" },
+		"text_vector": {
 			"type": "dense_vector",
 			"dims": 768,
 			"index": true,

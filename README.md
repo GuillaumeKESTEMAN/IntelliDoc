@@ -15,7 +15,7 @@
 
 ### 1. Import custom document
 
-You can import to the database a custom document (title, paragraph and source) in the database.
+You can import to the database a custom document (title, text and source) in the database.
 
 ### 2. Import french wikipedia dataset
 
@@ -23,14 +23,29 @@ You can download the wikipedia dataset and import X items into the database (you
 
 This can be a long process, as there is a lot of data in the wikipedia dataset, and we also need to reformat the data.
 
-### 3. Reset database index
+### 3. Import from import_data.json
 
-You can reset all data in the database to restart with new data without rebuilding the containers
+You can import to the database data from json file which is connected to the container (so you can update it when the container is running).
 
-### 4. Make a textual document research
+Example:
+```json
+[
+	{
+		"title": "your title",
+		"text": "your text",
+		"link": "your link",
+	}
+]
+```
+
+### 4. Reset database index
+
+You can reset all data in the database to restart with new data without rebuilding the containers.
+
+### 5. Make a textual document research
 
 You can make a textual document research (without AI).
 
-### 5. Make a semantic document research
+### 6. Make a semantic document research
 
 You can make a semantic document research (with AI).
