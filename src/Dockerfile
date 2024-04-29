@@ -5,6 +5,7 @@ WORKDIR /app
 COPY .env ./
 COPY src/requirements.txt ./
 COPY src/index_mapping.json ./
+COPY src/utils/summarize.py ./utils/
 COPY src/search.py ./
 COPY src/add_data.py ./
 COPY src/import_bulk.py ./

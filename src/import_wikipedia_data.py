@@ -34,7 +34,7 @@ def import_wikipedia_data(elastic, model):
 
     if import_bulk(elastic, model, data_list):
         print()
-        print("Dataset Wikipédia importé avec succès")
+        print("Données JSON importées avec succès")
 
     print()
     input("appuyez sur Entrée pour revenir au menu principal...")

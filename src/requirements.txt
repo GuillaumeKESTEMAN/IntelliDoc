@@ -2,3 +2,4 @@ python-dotenv
 elasticsearch
 datasets
 sentence_transformers
+bert-extractive-summarizer

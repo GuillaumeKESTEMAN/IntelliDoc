@@ -1,18 +1,31 @@
 import os
 
+from utils.summarize import summarize
 
-def select_result(results):
+
+def select_result(results, is_summarized):
     selected_result = -1
+
+    print("0: Revenir au menu principal")
+    print()
 
     for index, result in enumerate(results):
         print(f"{index + 1} :", result["_source"]["title"])
+
+        if is_summarized:
+            four_first_sentences = " ".join(
+                [var for var in result["_source"]["text"].split("\n") if var][0:4]
+            )
+            print(summarize(four_first_sentences))
+
+        print()
 
     while True:
         print()
         try:
             selected_result = int(input("Quel résultat choisissez-vous : "))
 
-            if selected_result > 0 and selected_result <= len(results):
+            if selected_result >= 0 and selected_result <= len(results):
                 break
             else:
                 raise ValueError
@@ -20,17 +33,23 @@ def select_result(results):
             print("\033[A                                                 \033[A")
             print("\033[A                                                 \033[A")
 
+    if selected_result == 0:
+        return 0
+
     return results[selected_result - 1]["_source"]
 
 
 # select result and print it
-def print_result(results):
+def print_result(results, is_summarized=False):
     print()
 
     if len(results) == 0:
         print("Aucune donnée trouvé")
     else:
-        research_result = select_result(results)
+        research_result = select_result(results, is_summarized)
+
+        if research_result == 0:
+            return
 
         os.system("cls" if os.name == "nt" else "clear")
         print("\033[1m" + research_result["title"] + "\033[0m")
@@ -136,4 +155,4 @@ def semantic_search(elastic, model):
     except Exception:
         print("Une erreur est survenue")
 
-    print_result(res["hits"]["hits"])
+    print_result(res["hits"]["hits"], True)
