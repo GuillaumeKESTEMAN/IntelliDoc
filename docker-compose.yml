@@ -18,6 +18,7 @@ services:
             dockerfile: src/Dockerfile
         environment:
             - TERM=xterm
+            - TOKENIZERS_PARALLELISM=false
         mem_limit: 1g
         volumes:
             - ./src/import_data.json:/app/import_data.json
