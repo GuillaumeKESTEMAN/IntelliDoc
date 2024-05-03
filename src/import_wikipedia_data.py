@@ -1,6 +1,6 @@
 import os
 from datasets import load_dataset
-from import_bulk import import_bulk
+from utils.import_bulk import import_bulk
 
 
 def import_wikipedia_data(elastic, model):

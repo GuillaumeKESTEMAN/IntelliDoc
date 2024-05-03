@@ -1,6 +1,6 @@
 import json
 
-from import_bulk import import_bulk
+from utils.import_bulk import import_bulk
 
 
 def import_from_json(elastic, model):
