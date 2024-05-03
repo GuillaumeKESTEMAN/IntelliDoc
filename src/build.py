@@ -1,4 +1,7 @@
+import warnings
 from sentence_transformers import SentenceTransformer
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
 
 # download sbert model during docker build
 # https://www.sbert.net/docs/pretrained_models.html

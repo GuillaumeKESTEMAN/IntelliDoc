@@ -15,7 +15,7 @@ def import_from_json(elastic, model):
             # import data into ElasticSearch
             if import_bulk(elastic, model, data):
                 print()
-                print("Dataset Wikipédia importé avec succès")
+                print("Données JSON importées avec succès")
 
     except Exception:
         print("Une erreur est survenue")
