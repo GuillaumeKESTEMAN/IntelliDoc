@@ -3,7 +3,7 @@ import os
 from utils.summarize import summarize
 
 
-def select_result(results, is_summarized):
+def select_result(results):
     selected_result = -1
 
     print("0: Revenir au menu principal")
@@ -12,11 +12,8 @@ def select_result(results, is_summarized):
     for index, result in enumerate(results):
         print(f"{index + 1} :", result["_source"]["title"])
 
-        if is_summarized:
-            four_first_sentences = " ".join(
-                [var for var in result["_source"]["text"].split("\n") if var][0:4]
-            )
-            print(summarize(four_first_sentences))
+        if "summary" in result["_source"]:
+            print(result["_source"]["summary"])
 
         print()
 
@@ -40,13 +37,13 @@ def select_result(results, is_summarized):
 
 
 # select result and print it
-def print_result(results, is_summarized=False):
+def print_result(results):
     print()
 
     if len(results) == 0:
         print("Aucune donnée trouvé")
     else:
-        research_result = select_result(results, is_summarized)
+        research_result = select_result(results)
 
         if research_result == 0:
             return
@@ -155,4 +152,13 @@ def semantic_search(elastic, model):
     except Exception:
         print("Une erreur est survenue")
 
-    print_result(res["hits"]["hits"], True)
+    results = res["hits"]["hits"]
+
+    for index, hit in enumerate(results):
+        # summarize four first sentences of the text
+        four_first_sentences = " ".join(
+            [var for var in hit["_source"]["text"].split("\n") if var][0:4]
+        )
+        results[index]["_source"]["summary"] = summarize(four_first_sentences)
+
+    print_result(results)

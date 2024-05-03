@@ -1,5 +1,6 @@
 import os
 import json
+import warnings
 from elasticsearch import Elasticsearch
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
@@ -8,6 +9,8 @@ from import_wikipedia_data import import_wikipedia_data
 from reset_index import reset_index
 from search import semantic_search, textual_search
 from add_data import add_data
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
 
 load_dotenv()
 

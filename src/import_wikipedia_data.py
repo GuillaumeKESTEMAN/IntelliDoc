@@ -1,6 +1,6 @@
 import os
 from datasets import load_dataset
-from import_bulk import import_bulk
+from utils.import_bulk import import_bulk
 
 
 def import_wikipedia_data(elastic, model):
@@ -34,7 +34,7 @@ def import_wikipedia_data(elastic, model):
 
     if import_bulk(elastic, model, data_list):
         print()
-        print("Données JSON importées avec succès")
+        print("Dataset Wikipédia importé avec succès")
 
     print()
     input("appuyez sur Entrée pour revenir au menu principal...")
